@@ -1,1 +1,1 @@
-UCVConverter
+Конвертер unity computer vision в yolo формат. С автоматическим создание конфигурации darknet для тренинга сразу после экспорта.
