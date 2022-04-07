@@ -40,6 +40,8 @@
             this.currentFolder = new System.Windows.Forms.Label();
             this.convertBtn = new System.Windows.Forms.Button();
             this.groupInfo = new System.Windows.Forms.GroupBox();
+            this.imageSize = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.classesCount = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.rectCount = new System.Windows.Forms.Label();
@@ -47,10 +49,18 @@
             this.imageCount = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupExport = new System.Windows.Forms.GroupBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.yoloHeight = new System.Windows.Forms.NumericUpDown();
+            this.yoloWidth = new System.Windows.Forms.NumericUpDown();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.groupFolders.SuspendLayout();
             this.groupInfo.SuspendLayout();
             this.groupExport.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // groupFolders
@@ -144,7 +154,7 @@
             // convertBtn
             // 
             this.convertBtn.Enabled = false;
-            this.convertBtn.Location = new System.Drawing.Point(6, 22);
+            this.convertBtn.Location = new System.Drawing.Point(391, 86);
             this.convertBtn.Name = "convertBtn";
             this.convertBtn.Size = new System.Drawing.Size(75, 23);
             this.convertBtn.TabIndex = 11;
@@ -154,6 +164,8 @@
             // 
             // groupInfo
             // 
+            this.groupInfo.Controls.Add(this.imageSize);
+            this.groupInfo.Controls.Add(this.label6);
             this.groupInfo.Controls.Add(this.classesCount);
             this.groupInfo.Controls.Add(this.label4);
             this.groupInfo.Controls.Add(this.rectCount);
@@ -166,6 +178,26 @@
             this.groupInfo.TabIndex = 14;
             this.groupInfo.TabStop = false;
             this.groupInfo.Text = "Info";
+            // 
+            // imageSize
+            // 
+            this.imageSize.AutoSize = true;
+            this.imageSize.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.imageSize.Location = new System.Drawing.Point(121, 93);
+            this.imageSize.Name = "imageSize";
+            this.imageSize.Size = new System.Drawing.Size(61, 15);
+            this.imageSize.TabIndex = 7;
+            this.imageSize.Text = "1920x1920";
+            this.imageSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(18, 93);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(63, 15);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "Image Size";
             // 
             // classesCount
             // 
@@ -226,19 +258,109 @@
             // 
             // groupExport
             // 
+            this.groupExport.Controls.Add(this.groupBox1);
             this.groupExport.Controls.Add(this.convertBtn);
             this.groupExport.Location = new System.Drawing.Point(12, 186);
             this.groupExport.Name = "groupExport";
-            this.groupExport.Size = new System.Drawing.Size(472, 57);
+            this.groupExport.Size = new System.Drawing.Size(472, 115);
             this.groupExport.TabIndex = 15;
             this.groupExport.TabStop = false;
             this.groupExport.Text = "Export";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.yoloHeight);
+            this.groupBox1.Controls.Add(this.yoloWidth);
+            this.groupBox1.Location = new System.Drawing.Point(16, 22);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(140, 83);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Dimension";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(11, 56);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(43, 15);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Height";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 27);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 15);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Width";
+            // 
+            // yoloHeight
+            // 
+            this.yoloHeight.Increment = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.yoloHeight.Location = new System.Drawing.Point(60, 54);
+            this.yoloHeight.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.yoloHeight.Minimum = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.yoloHeight.Name = "yoloHeight";
+            this.yoloHeight.ReadOnly = true;
+            this.yoloHeight.Size = new System.Drawing.Size(67, 23);
+            this.yoloHeight.TabIndex = 15;
+            this.yoloHeight.Value = new decimal(new int[] {
+            416,
+            0,
+            0,
+            0});
+            // 
+            // yoloWidth
+            // 
+            this.yoloWidth.Increment = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.yoloWidth.Location = new System.Drawing.Point(60, 25);
+            this.yoloWidth.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.yoloWidth.Minimum = new decimal(new int[] {
+            32,
+            0,
+            0,
+            0});
+            this.yoloWidth.Name = "yoloWidth";
+            this.yoloWidth.ReadOnly = true;
+            this.yoloWidth.Size = new System.Drawing.Size(67, 23);
+            this.yoloWidth.TabIndex = 14;
+            this.yoloWidth.Value = new decimal(new int[] {
+            416,
+            0,
+            0,
+            0});
+            this.yoloWidth.ValueChanged += new System.EventHandler(this.yoloWidth_ValueChanged);
+            this.yoloWidth.Scroll += new System.Windows.Forms.ScrollEventHandler(this.yoloWidth_Scroll);
             // 
             // progressBar
             // 
             this.progressBar.AccessibleName = "";
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar.Location = new System.Drawing.Point(0, 255);
+            this.progressBar.Location = new System.Drawing.Point(0, 305);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(496, 23);
             this.progressBar.TabIndex = 17;
@@ -247,7 +369,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(496, 278);
+            this.ClientSize = new System.Drawing.Size(496, 328);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.groupExport);
             this.Controls.Add(this.groupInfo);
@@ -260,6 +382,10 @@
             this.groupInfo.ResumeLayout(false);
             this.groupInfo.PerformLayout();
             this.groupExport.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloWidth)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -285,5 +411,12 @@
         private Label label4;
         private GroupBox groupExport;
         private ProgressBar progressBar;
+        private GroupBox groupBox1;
+        private Label label5;
+        private Label label2;
+        private NumericUpDown yoloHeight;
+        private NumericUpDown yoloWidth;
+        private Label imageSize;
+        private Label label6;
     }
 }

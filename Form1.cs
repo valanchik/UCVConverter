@@ -4,7 +4,7 @@ namespace UCVConverter
 {
     public partial class Form1 : Form
     {
-        private UCV ucv = new("");
+        private YOLOUCV ucv = new("");
         
         public Form1()
         {
@@ -17,7 +17,6 @@ namespace UCVConverter
             {
                 currentFolder.Text = folderDialog.SelectedPath;
                 ucv = new YOLOUCV(folderDialog.SelectedPath);
-                
                 DatasetFolderName.Text = ucv.GetDatasetFolder().Name;
                 openDatasetBtn.Click -= openDatasetBtn_Click;
                 openDatasetBtn.Click += openDatasetBtn_Click;
@@ -29,6 +28,8 @@ namespace UCVConverter
                 SegmentationFolderName.Text = ucv.GetSegmentationFolder().Name;
                 openSegmentationBtn.Click -= openSegmentationBtn_Click;
                 openSegmentationBtn.Click += openSegmentationBtn_Click;
+                
+
                 YOLOUCV.OnLoadObjects += ()=>
                 {
                     var info = ucv.GetInfo();
@@ -36,10 +37,12 @@ namespace UCVConverter
                     rectCount.Text = info.RectagleCount.ToString();
                     classesCount.Text = info.ClassesCount.ToString();
                     convertBtn.Enabled = true;
+                    Size size = ucv.GetImageSize();
+                    imageSize.Text = $"{size.Width}x{size.Height}";
+                    ucv.SetYOLODimension(new Size((int)yoloWidth.Value, (int)yoloHeight.Value));
                 };
                 ucv.GetCaptureObject();
             }
-            
         }
         private void OnLoadObjectsOnce()
         {
@@ -92,6 +95,16 @@ namespace UCVConverter
             var ucv = yucv as YOLOUCV;
             ucv.Export();
         }
-        
+
+        private void yoloWidth_Scroll(object sender, ScrollEventArgs e)
+        {
+            Debug.WriteLine("Scroll");
+        }
+
+        private void yoloWidth_ValueChanged(object sender, EventArgs e)
+        {
+            var val = sender as NumericUpDown;
+            Debug.WriteLine(val.Value);    
+        }
     }
 }

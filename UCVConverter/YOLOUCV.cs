@@ -15,13 +15,18 @@ namespace UCVConverter
         
         private string filesFolder;
         public static event Action<ProgressInfo> OnSavedElement;
+        private Size dim = new Size();
         public YOLOUCV(string dir) : base(dir)
         {
             filesFolder = Directory.GetCurrentDirectory()+"/files";
         }
+        public void SetYOLODimension(Size size)
+        {
+            dim = size;
+        }
         public override void Export()
         {
-            var size = GetImageSize(GetElements().First());
+            var size = GetImageSize();
             var dirDataName = "data";
             var yolodata = resultFolder.Path + "/"+dirDataName;
             var dirBackupName = "backup";
@@ -126,6 +131,15 @@ namespace UCVConverter
            var config = Configuration.LoadFromFile(filesFolder + Path.DirectorySeparatorChar+ "yolov4-tiny.cfg");
             var info = GetInfo();
             Section lastSection = new Section("temp");
+            // Set dimension
+            Section netSection = config.First(s => s.Name == "net");
+            if (netSection!=null)
+            {
+                netSection.First(s => s.Name == "width")?.SetValue(dim.Width);
+                netSection.First(s => s.Name == "height")?.SetValue(dim.Height);
+            }
+
+            // Setting count of classes  and of filters
             foreach (Section? section in config)
             {
 
@@ -151,6 +165,7 @@ namespace UCVConverter
                     }
                 }
             }
+
             var configFile = resultFolder.Path + Path.DirectorySeparatorChar + "yolov4-tiny.cfg";
             var file = config.StringRepresentation;
             file = file.Replace("\"", "");

@@ -30,7 +30,7 @@ namespace UCVConverter
         protected Folder segmentationFolder;
         protected Folder resultFolder;
         protected TextBoxBase log;
-        protected CaptureObject? data;
+        public CaptureObject? data;
         public static event Action OnLoadObjects;
         public static event Action<ProgressInfo> OnSavedElement;
         public static event Action OnExported;
@@ -70,8 +70,11 @@ namespace UCVConverter
             return count;
         }
         public virtual void Export() => OnExported?.Invoke();
-        public Size GetImageSize(CaptureElement obj)
+       
+        public Size GetImageSize()
         {
+            var obj = GetElements().First();
+            if(obj == null) return Size.Empty;
             Bitmap bitmap = new Bitmap(rootPath+"/"+obj.filename);
             return bitmap.Size;
         }
