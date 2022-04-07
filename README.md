@@ -6,3 +6,7 @@
 
 **Видео**
 https://www.youtube.com/watch?v=D8o0e_QM7mA
+
+**Скачать**
+https://github.com/valanchik/UCVConverter/releases
+Предварительно необходимо установить .NET Core 6
