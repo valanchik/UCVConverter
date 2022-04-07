@@ -144,7 +144,7 @@
             // convertBtn
             // 
             this.convertBtn.Enabled = false;
-            this.convertBtn.Location = new System.Drawing.Point(6, 18);
+            this.convertBtn.Location = new System.Drawing.Point(6, 22);
             this.convertBtn.Name = "convertBtn";
             this.convertBtn.Size = new System.Drawing.Size(75, 23);
             this.convertBtn.TabIndex = 11;
@@ -255,7 +255,7 @@
             this.Controls.Add(this.openFolder);
             this.Controls.Add(this.currentFolder);
             this.Name = "Form1";
-            this.Text = "UnityComputerVision to YOLO";
+            this.Text = "UCVConverter";
             this.groupFolders.ResumeLayout(false);
             this.groupInfo.ResumeLayout(false);
             this.groupInfo.PerformLayout();

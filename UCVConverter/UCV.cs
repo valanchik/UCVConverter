@@ -25,7 +25,6 @@ namespace UCVConverter
         
     {
         protected string rootPath;
-        protected Folder[] dirs;
         protected Folder datasetFolder;
         protected Folder rgbFolder;
         protected Folder segmentationFolder;
@@ -197,7 +196,5 @@ namespace UCVConverter
                 return false;
             }
         }
-        public Folder[] Directories { get { return dirs; } }
-        public string RootPath { get { return rootPath; } }
     }
 }
