@@ -4,4 +4,5 @@
 - Visual Studio 2022
 - .NET Core 6
 
-**Картинки**
+**Видео**
+https://www.youtube.com/watch?v=D8o0e_QM7mA
