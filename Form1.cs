@@ -70,7 +70,8 @@ namespace UCVConverter
                         new Size((int)yoloWidth.Value, (int)yoloHeight.Value),
                         randomDimension.Checked,
                         (int)yoloBatch.Value,
-                        (int)yoloSubdivisions.Value
+                        (int)yoloSubdivisions.Value,
+                        yoloConfigOnly.Checked
                     );
                 var cb = () =>
                  {

@@ -18,6 +18,8 @@ namespace UCVConverter
             public bool Randomize { get; set; }
             public int Batch { get; set; }
             public int Subdivisions { get; set; }
+            public bool ExportConfigOnly { get; set; }
+
         }
         
         private string filesFolder;
@@ -27,65 +29,75 @@ namespace UCVConverter
         {
             filesFolder = Directory.GetCurrentDirectory()+"/files";
         }
-        public void Configure(Size dimension, bool randomize, int batch, int subdivisions)
+        public void Configure(Size dimension, bool randomize, int batch, int subdivisions, bool exportConfigOnly)
         {
             config.Dimension = dimension;
             config.Randomize = randomize;
             config.Batch = batch;
             config.Subdivisions = subdivisions;
+            config.ExportConfigOnly = exportConfigOnly;
 
         }
         public override void Export()
         {
-            var size = GetImageSize();
-            var dirDataName = "data";
-            var yolodata = resultFolder.Path + "/"+dirDataName;
-            var dirBackupName = "backup";
-            var yolobackup = resultFolder.Path + "/"+ dirBackupName;
-            var trainFolderName = "traindata";
-            var traindata = yolodata + "/"+trainFolderName;
-            createDir(yolodata);
-            createDir(yolobackup);  
-            createDir(traindata);
-            CreateObjectData(yolodata, dirDataName, dirBackupName);
-            CreateObjectName(yolodata);
-            CreateYOLOConfig();
-            var traintext = File.CreateText(yolodata+"/train.txt");
-            var validtext = File.CreateText(yolodata+"/valid.txt");
-            var count = GetElements().Count();
-            var current = 0;
-            foreach (CaptureElement? element in GetElements())
+            if (config.ExportConfigOnly)
             {
-                current++;
-                string filepath = rootPath+"/"+element.filename;
-                string filename = Path.GetFileNameWithoutExtension(filepath);
-                if (new Random().Next(1,100)>=30)
+                CreateYOLOConfig();
+            } else
+            {
+                var size = GetImageSize();
+                var dirDataName = "data";
+                var yolodata = resultFolder.Path + "/" + dirDataName;
+                var dirBackupName = "backup";
+                var yolobackup = resultFolder.Path + "/" + dirBackupName;
+                var trainFolderName = "traindata";
+                var traindata = yolodata + "/" + trainFolderName;
+
+                createDir(yolodata);
+                createDir(yolobackup);
+                createDir(traindata);
+                CreateObjectData(yolodata, dirDataName, dirBackupName);
+                CreateObjectName(yolodata);
+                CreateYOLOConfig();
+                var traintext = File.CreateText(yolodata + "/train.txt");
+                var validtext = File.CreateText(yolodata + "/valid.txt");
+                var count = GetElements().Count();
+                var current = 0;
+                foreach (CaptureElement? element in GetElements())
                 {
-                    traintext.WriteLine($"{dirDataName}/{trainFolderName}/{filename}.jpg");
-                } else
-                {
-                    validtext.WriteLine($"{dirDataName}/{trainFolderName}/{filename}.jpg");
-                }
-                SavePngToJPEG(filepath, traindata+"/"+filename+".jpg");
-                using (var f = File.CreateText(traindata + "/" + filename + ".txt"))
-                {
-                    foreach (var annot in GetElementAnnotations("bounding box", element))
+                    current++;
+                    string filepath = rootPath + "/" + element.filename;
+                    string filename = Path.GetFileNameWithoutExtension(filepath);
+                    if (new Random().Next(1, 100) >= 30)
                     {
-                        foreach (var val in GetElementAnnotationValues(annot))
-                        {
-                            RectangleF rect = GetRectangleFromValue(val, size);
-                            rect.X += rect.Width / 2;
-                            rect.Y += rect.Height / 2;
-                            f.WriteLine($"{val.label_id} {rect.X.ToString().Replace(",", ".")} {rect.Y.ToString().Replace(",", ".")} {rect.Width.ToString().Replace(",", ".")} {rect.Height.ToString().Replace(",", ".")}");
-                        }
+                        traintext.WriteLine($"{dirDataName}/{trainFolderName}/{filename}.jpg");
                     }
-                    f.Close();
-                    OnSavedElement?.Invoke(new() { Current = current, Count = count});
+                    else
+                    {
+                        validtext.WriteLine($"{dirDataName}/{trainFolderName}/{filename}.jpg");
+                    }
+                    SavePngToJPEG(filepath, traindata + "/" + filename + ".jpg");
+                    using (var f = File.CreateText(traindata + "/" + filename + ".txt"))
+                    {
+                        foreach (var annot in GetElementAnnotations("bounding box", element))
+                        {
+                            foreach (var val in GetElementAnnotationValues(annot))
+                            {
+                                RectangleF rect = GetRectangleFromValue(val, size);
+                                rect.X += rect.Width / 2;
+                                rect.Y += rect.Height / 2;
+                                f.WriteLine($"{val.label_id} {rect.X.ToString().Replace(",", ".")} {rect.Y.ToString().Replace(",", ".")} {rect.Width.ToString().Replace(",", ".")} {rect.Height.ToString().Replace(",", ".")}");
+                            }
+                        }
+                        f.Close();
+                        OnSavedElement?.Invoke(new() { Current = current, Count = count });
+                    }
                 }
+                traintext.Close();
+                validtext.Close();
+                CopyDarknet();
             }
-            traintext.Close();
-            validtext.Close();
-            CopyDarknet();
+            
             base.Export();
         }
         private void CreateObjectData(string path, string yolodata, string yolobackupname)

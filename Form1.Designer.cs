@@ -51,23 +51,24 @@
             this.groupExport = new System.Windows.Forms.GroupBox();
             this.randomDimension = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.yoloSubdivisions = new System.Windows.Forms.NumericUpDown();
+            this.yoloBatch = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.yoloHeight = new System.Windows.Forms.NumericUpDown();
             this.yoloWidth = new System.Windows.Forms.NumericUpDown();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.yoloSubdivisions = new System.Windows.Forms.NumericUpDown();
-            this.yoloBatch = new System.Windows.Forms.NumericUpDown();
+            this.yoloConfigOnly = new System.Windows.Forms.CheckBox();
             this.groupFolders.SuspendLayout();
             this.groupInfo.SuspendLayout();
             this.groupExport.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.yoloHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.yoloWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yoloSubdivisions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yoloBatch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloWidth)).BeginInit();
             this.SuspendLayout();
             // 
             // groupFolders
@@ -265,6 +266,7 @@
             // 
             // groupExport
             // 
+            this.groupExport.Controls.Add(this.yoloConfigOnly);
             this.groupExport.Controls.Add(this.randomDimension);
             this.groupExport.Controls.Add(this.groupBox1);
             this.groupExport.Controls.Add(this.convertBtn);
@@ -301,6 +303,80 @@
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Net";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(139, 55);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(73, 15);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Subdivisions";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(175, 26);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(37, 15);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "Batch";
+            // 
+            // yoloSubdivisions
+            // 
+            this.yoloSubdivisions.Increment = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.yoloSubdivisions.Location = new System.Drawing.Point(218, 53);
+            this.yoloSubdivisions.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.yoloSubdivisions.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.yoloSubdivisions.Name = "yoloSubdivisions";
+            this.yoloSubdivisions.ReadOnly = true;
+            this.yoloSubdivisions.Size = new System.Drawing.Size(67, 23);
+            this.yoloSubdivisions.TabIndex = 19;
+            this.yoloSubdivisions.Value = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            // 
+            // yoloBatch
+            // 
+            this.yoloBatch.Increment = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.yoloBatch.Location = new System.Drawing.Point(218, 24);
+            this.yoloBatch.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.yoloBatch.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.yoloBatch.Name = "yoloBatch";
+            this.yoloBatch.ReadOnly = true;
+            this.yoloBatch.Size = new System.Drawing.Size(67, 23);
+            this.yoloBatch.TabIndex = 18;
+            this.yoloBatch.Value = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
             // 
             // label5
             // 
@@ -385,79 +461,15 @@
             this.progressBar.Size = new System.Drawing.Size(540, 23);
             this.progressBar.TabIndex = 17;
             // 
-            // label7
+            // yoloConfigOnly
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(139, 55);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(73, 15);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "Subdivisions";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(175, 26);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(37, 15);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "Batch";
-            // 
-            // yoloSubdivisions
-            // 
-            this.yoloSubdivisions.Increment = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.yoloSubdivisions.Location = new System.Drawing.Point(218, 53);
-            this.yoloSubdivisions.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.yoloSubdivisions.Minimum = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.yoloSubdivisions.Name = "yoloSubdivisions";
-            this.yoloSubdivisions.ReadOnly = true;
-            this.yoloSubdivisions.Size = new System.Drawing.Size(67, 23);
-            this.yoloSubdivisions.TabIndex = 19;
-            this.yoloSubdivisions.Value = new decimal(new int[] {
-            16,
-            0,
-            0,
-            0});
-            // 
-            // yoloBatch
-            // 
-            this.yoloBatch.Increment = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.yoloBatch.Location = new System.Drawing.Point(218, 24);
-            this.yoloBatch.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
-            this.yoloBatch.Minimum = new decimal(new int[] {
-            8,
-            0,
-            0,
-            0});
-            this.yoloBatch.Name = "yoloBatch";
-            this.yoloBatch.ReadOnly = true;
-            this.yoloBatch.Size = new System.Drawing.Size(67, 23);
-            this.yoloBatch.TabIndex = 18;
-            this.yoloBatch.Value = new decimal(new int[] {
-            64,
-            0,
-            0,
-            0});
+            this.yoloConfigOnly.AutoSize = true;
+            this.yoloConfigOnly.Location = new System.Drawing.Point(337, 85);
+            this.yoloConfigOnly.Name = "yoloConfigOnly";
+            this.yoloConfigOnly.Size = new System.Drawing.Size(88, 19);
+            this.yoloConfigOnly.TabIndex = 14;
+            this.yoloConfigOnly.Text = "Config only";
+            this.yoloConfigOnly.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -479,10 +491,10 @@
             this.groupExport.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.yoloHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.yoloWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yoloSubdivisions)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yoloBatch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloWidth)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -520,5 +532,6 @@
         private Label label8;
         private NumericUpDown yoloSubdivisions;
         private NumericUpDown yoloBatch;
+        private CheckBox yoloConfigOnly;
     }
 }
