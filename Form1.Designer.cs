@@ -375,8 +375,6 @@
             0,
             0,
             0});
-            this.yoloWidth.ValueChanged += new System.EventHandler(this.yoloWidth_ValueChanged);
-            this.yoloWidth.Scroll += new System.Windows.Forms.ScrollEventHandler(this.yoloWidth_Scroll);
             // 
             // progressBar
             // 

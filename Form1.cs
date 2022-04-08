@@ -109,15 +109,5 @@ namespace UCVConverter
             ucv.Export();
         }
 
-        private void yoloWidth_Scroll(object sender, ScrollEventArgs e)
-        {
-            Debug.WriteLine("Scroll");
-        }
-
-        private void yoloWidth_ValueChanged(object sender, EventArgs e)
-        {
-            var val = sender as NumericUpDown;
-            Debug.WriteLine(val.Value);    
-        }
     }
 }
