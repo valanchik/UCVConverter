@@ -1,11 +1,12 @@
 using System.Diagnostics;
+using ThreadState = System.Threading.ThreadState;
 
 namespace UCVConverter
 {
     public partial class Form1 : Form
     {
         private YOLOUCV ucv = new("");
-        
+        Thread thread;
         public Form1()
         {
             InitializeComponent();
@@ -39,7 +40,7 @@ namespace UCVConverter
                     convertBtn.Enabled = true;
                     Size size = ucv.GetImageSize();
                     imageSize.Text = $"{size.Width}x{size.Height}";
-                    ucv.SetYOLODimension(new Size((int)yoloWidth.Value, (int)yoloHeight.Value));
+                    
                 };
                 ucv.GetCaptureObject();
             }
@@ -65,19 +66,31 @@ namespace UCVConverter
                 btn.Enabled = false;
                 openFolder.Enabled = false;
                 ucv.SetResultFolder(folderDialog.SelectedPath);
+                ucv.Configure(
+                        new Size((int)yoloWidth.Value, (int)yoloHeight.Value),
+                        randomDimension.Checked,
+                        (int)yoloBatch.Value,
+                        (int)yoloSubdivisions.Value
+                    );
                 var cb = () =>
                  {
-                     btn.Invoke(new Action(() => { 
-                         btn.Enabled = true; 
+                     btn.Invoke(new Action(() =>
+                     {
+                         btn.Enabled = true;
                          openFolder.Enabled = true;
                          progressBar.Value = 0;
                      }));
+                     if (thread != null && thread.ThreadState != ThreadState.Stopped){
+
+                     }
+
                  };
                 YOLOUCV.OnExported-=cb;
                 YOLOUCV.OnExported+=cb;
                 YOLOUCV.OnSavedElement -= Ucv_OnSavedElement;
                 YOLOUCV.OnSavedElement += Ucv_OnSavedElement;
-                var thread = new Thread(yootread);
+                thread = new Thread(yolotread);
+                thread.Priority = ThreadPriority.Highest;
                 thread.Start(ucv);
             }
         }
@@ -90,7 +103,7 @@ namespace UCVConverter
             }));
         }
 
-        private void yootread(object? yucv)
+        private void yolotread(object? yucv)
         {
             var ucv = yucv as YOLOUCV;
             ucv.Export();

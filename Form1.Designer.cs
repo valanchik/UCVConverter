@@ -49,18 +49,25 @@
             this.imageCount = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupExport = new System.Windows.Forms.GroupBox();
+            this.randomDimension = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.yoloHeight = new System.Windows.Forms.NumericUpDown();
             this.yoloWidth = new System.Windows.Forms.NumericUpDown();
             this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.yoloSubdivisions = new System.Windows.Forms.NumericUpDown();
+            this.yoloBatch = new System.Windows.Forms.NumericUpDown();
             this.groupFolders.SuspendLayout();
             this.groupInfo.SuspendLayout();
             this.groupExport.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.yoloHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yoloWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloSubdivisions)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloBatch)).BeginInit();
             this.SuspendLayout();
             // 
             // groupFolders
@@ -154,7 +161,7 @@
             // convertBtn
             // 
             this.convertBtn.Enabled = false;
-            this.convertBtn.Location = new System.Drawing.Point(391, 86);
+            this.convertBtn.Location = new System.Drawing.Point(435, 82);
             this.convertBtn.Name = "convertBtn";
             this.convertBtn.Size = new System.Drawing.Size(75, 23);
             this.convertBtn.TabIndex = 11;
@@ -258,32 +265,47 @@
             // 
             // groupExport
             // 
+            this.groupExport.Controls.Add(this.randomDimension);
             this.groupExport.Controls.Add(this.groupBox1);
             this.groupExport.Controls.Add(this.convertBtn);
             this.groupExport.Location = new System.Drawing.Point(12, 186);
             this.groupExport.Name = "groupExport";
-            this.groupExport.Size = new System.Drawing.Size(472, 115);
+            this.groupExport.Size = new System.Drawing.Size(516, 115);
             this.groupExport.TabIndex = 15;
             this.groupExport.TabStop = false;
             this.groupExport.Text = "Export";
             // 
+            // randomDimension
+            // 
+            this.randomDimension.AutoSize = true;
+            this.randomDimension.Location = new System.Drawing.Point(361, 33);
+            this.randomDimension.Name = "randomDimension";
+            this.randomDimension.Size = new System.Drawing.Size(149, 19);
+            this.randomDimension.TabIndex = 13;
+            this.randomDimension.Text = "Randomize dimensions";
+            this.randomDimension.UseVisualStyleBackColor = true;
+            // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.yoloSubdivisions);
+            this.groupBox1.Controls.Add(this.yoloBatch);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.yoloHeight);
             this.groupBox1.Controls.Add(this.yoloWidth);
             this.groupBox1.Location = new System.Drawing.Point(16, 22);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(140, 83);
+            this.groupBox1.Size = new System.Drawing.Size(297, 83);
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Dimension";
+            this.groupBox1.Text = "Net";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(11, 56);
+            this.label5.Location = new System.Drawing.Point(16, 55);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(43, 15);
             this.label5.TabIndex = 17;
@@ -292,7 +314,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 27);
+            this.label2.Location = new System.Drawing.Point(21, 26);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 15);
             this.label2.TabIndex = 16;
@@ -305,7 +327,7 @@
             0,
             0,
             0});
-            this.yoloHeight.Location = new System.Drawing.Point(60, 54);
+            this.yoloHeight.Location = new System.Drawing.Point(65, 53);
             this.yoloHeight.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -333,7 +355,7 @@
             0,
             0,
             0});
-            this.yoloWidth.Location = new System.Drawing.Point(60, 25);
+            this.yoloWidth.Location = new System.Drawing.Point(65, 24);
             this.yoloWidth.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -362,14 +384,88 @@
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.progressBar.Location = new System.Drawing.Point(0, 305);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(496, 23);
+            this.progressBar.Size = new System.Drawing.Size(540, 23);
             this.progressBar.TabIndex = 17;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(139, 55);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(73, 15);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Subdivisions";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(175, 26);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(37, 15);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "Batch";
+            // 
+            // yoloSubdivisions
+            // 
+            this.yoloSubdivisions.Increment = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.yoloSubdivisions.Location = new System.Drawing.Point(218, 53);
+            this.yoloSubdivisions.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.yoloSubdivisions.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.yoloSubdivisions.Name = "yoloSubdivisions";
+            this.yoloSubdivisions.ReadOnly = true;
+            this.yoloSubdivisions.Size = new System.Drawing.Size(67, 23);
+            this.yoloSubdivisions.TabIndex = 19;
+            this.yoloSubdivisions.Value = new decimal(new int[] {
+            16,
+            0,
+            0,
+            0});
+            // 
+            // yoloBatch
+            // 
+            this.yoloBatch.Increment = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.yoloBatch.Location = new System.Drawing.Point(218, 24);
+            this.yoloBatch.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+            this.yoloBatch.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.yoloBatch.Name = "yoloBatch";
+            this.yoloBatch.ReadOnly = true;
+            this.yoloBatch.Size = new System.Drawing.Size(67, 23);
+            this.yoloBatch.TabIndex = 18;
+            this.yoloBatch.Value = new decimal(new int[] {
+            64,
+            0,
+            0,
+            0});
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(496, 328);
+            this.ClientSize = new System.Drawing.Size(540, 328);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.groupExport);
             this.Controls.Add(this.groupInfo);
@@ -382,10 +478,13 @@
             this.groupInfo.ResumeLayout(false);
             this.groupInfo.PerformLayout();
             this.groupExport.ResumeLayout(false);
+            this.groupExport.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.yoloHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yoloWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloSubdivisions)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yoloBatch)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -418,5 +517,10 @@
         private NumericUpDown yoloWidth;
         private Label imageSize;
         private Label label6;
+        private CheckBox randomDimension;
+        private Label label7;
+        private Label label8;
+        private NumericUpDown yoloSubdivisions;
+        private NumericUpDown yoloBatch;
     }
 }

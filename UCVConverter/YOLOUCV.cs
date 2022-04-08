@@ -12,17 +12,28 @@ namespace UCVConverter
 
     internal class YOLOUCV : UCV
     {
+        private class Config
+        {
+            public Size Dimension { get; set; }
+            public bool Randomize { get; set; }
+            public int Batch { get; set; }
+            public int Subdivisions { get; set; }
+        }
         
         private string filesFolder;
         public static event Action<ProgressInfo> OnSavedElement;
-        private Size dim = new Size();
+        private Config config = new();
         public YOLOUCV(string dir) : base(dir)
         {
             filesFolder = Directory.GetCurrentDirectory()+"/files";
         }
-        public void SetYOLODimension(Size size)
+        public void Configure(Size dimension, bool randomize, int batch, int subdivisions)
         {
-            dim = size;
+            config.Dimension = dimension;
+            config.Randomize = randomize;
+            config.Batch = batch;
+            config.Subdivisions = subdivisions;
+
         }
         public override void Export()
         {
@@ -128,19 +139,20 @@ namespace UCVConverter
         }
         private void CreateYOLOConfig()
         {
-           var config = Configuration.LoadFromFile(filesFolder + Path.DirectorySeparatorChar+ "yolov4-tiny.cfg");
+           var yoloConfig = Configuration.LoadFromFile(filesFolder + Path.DirectorySeparatorChar+ "yolov4-tiny.cfg");
             var info = GetInfo();
             Section lastSection = new Section("temp");
-            // Set dimension
-            Section netSection = config.First(s => s.Name == "net");
+            // Set net
+            Section netSection = yoloConfig.First(s => s.Name == "net");
             if (netSection!=null)
             {
-                netSection.First(s => s.Name == "width")?.SetValue(dim.Width);
-                netSection.First(s => s.Name == "height")?.SetValue(dim.Height);
+                netSection.First(s => s.Name == "batch")?.SetValue(config.Batch);
+                netSection.First(s => s.Name == "subdivisions")?.SetValue(config.Subdivisions);
+                netSection.First(s => s.Name == "width")?.SetValue(config.Dimension.Width);
+                netSection.First(s => s.Name == "height")?.SetValue(config.Dimension.Height);
             }
-
             // Setting count of classes  and of filters
-            foreach (Section? section in config)
+            foreach (Section? section in yoloConfig)
             {
 
                 if (section.Name != "yolo")
@@ -162,12 +174,14 @@ namespace UCVConverter
                     if (setting.Name == "classes")
                     {
                         setting.SetValue(info.ClassesCount);
+                    } else if (setting.Name == "random")
+                    {
+                        setting.SetValue(config.Randomize?1:0);
                     }
                 }
             }
-
             var configFile = resultFolder.Path + Path.DirectorySeparatorChar + "yolov4-tiny.cfg";
-            var file = config.StringRepresentation;
+            var file = yoloConfig.StringRepresentation;
             file = file.Replace("\"", "");
             File.WriteAllText(configFile, file);
         }
