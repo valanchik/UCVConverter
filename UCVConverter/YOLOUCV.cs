@@ -22,6 +22,9 @@ namespace UCVConverter
         public int Batch { get; set; }
         public int Subdivisions { get; set; }
         public bool ExportConfigOnly { get; set; }
+        public string configFilePath;
+        public string resultConfigFilePath;
+        public string convWeightFileName;
 
     }
     internal class YOLOUCV : UCV
@@ -40,6 +43,16 @@ namespace UCVConverter
         public void Configure(YOLOConfig config)
         {
             this.config = config;
+            if (config.Type == YOLOType.YOLOV4)
+            {
+                this.config.configFilePath = filesFolder + Path.DirectorySeparatorChar + "yolov4.cfg";
+                this.config.convWeightFileName = "yolov4.conv.137";
+            } else
+            {
+                this.config.configFilePath = filesFolder + Path.DirectorySeparatorChar + "yolov4-tiny.cfg";
+                this.config.convWeightFileName = "yolov4-tiny.conv.29";
+            }
+            this.config.resultConfigFilePath = resultFolder.Path + Path.DirectorySeparatorChar + Path.GetFileName(config.configFilePath);
         }
         public override void Export()
         {
@@ -62,42 +75,44 @@ namespace UCVConverter
                 CreateObjectData(yolodata, dirDataName, dirBackupName);
                 CreateObjectName(yolodata);
                 CreateYOLOConfig();
-                var traintext = File.CreateText(yolodata + "/train.txt");
-                var validtext = File.CreateText(yolodata + "/valid.txt");
-                var count = GetElements().Count();
-                var current = 0;
-                foreach (CaptureElement? element in GetElements())
-                {
-                    current++;
-                    string filepath = rootPath + "/" + element.filename;
-                    string filename = Path.GetFileNameWithoutExtension(filepath);
-                    if (new Random().Next(1, 100) >= 30)
+                CreateBatFiles();
+                using (var traintext = File.CreateText(yolodata + "/train.txt"))
+                using(var validtext = File.CreateText(yolodata + "/valid.txt")){
+                    var count = GetElements().Count();
+                    var current = 0;
+                    foreach (CaptureElement? element in GetElements())
                     {
-                        traintext.WriteLine($"{dirDataName}/{trainFolderName}/{filename}.jpg");
-                    }
-                    else
-                    {
-                        validtext.WriteLine($"{dirDataName}/{trainFolderName}/{filename}.jpg");
-                    }
-                    SavePngToJPEG(filepath, traindata + "/" + filename + ".jpg");
-                    using (var f = File.CreateText(traindata + "/" + filename + ".txt"))
-                    {
-                        foreach (var annot in GetElementAnnotations("bounding box", element))
+                        current++;
+                        string filepath = rootPath + "/" + element.filename;
+                        string filename = Path.GetFileNameWithoutExtension(filepath);
+                        if (new Random().Next(1, 100) >= 30)
                         {
-                            foreach (var val in GetElementAnnotationValues(annot))
-                            {
-                                RectangleF rect = GetRectangleFromValue(val, size);
-                                rect.X += rect.Width / 2;
-                                rect.Y += rect.Height / 2;
-                                f.WriteLine($"{val.label_id} {rect.X.ToString().Replace(",", ".")} {rect.Y.ToString().Replace(",", ".")} {rect.Width.ToString().Replace(",", ".")} {rect.Height.ToString().Replace(",", ".")}");
-                            }
+                            traintext.WriteLine($"{dirDataName}/{trainFolderName}/{filename}.jpg");
                         }
-                        f.Close();
-                        OnSavedElement?.Invoke(new() { Current = current, Count = count });
+                        else
+                        {
+                            validtext.WriteLine($"{dirDataName}/{trainFolderName}/{filename}.jpg");
+                        }
+                        SavePngToJPEG(filepath, traindata + "/" + filename + ".jpg");
+                        using (var f = File.CreateText(traindata + "/" + filename + ".txt"))
+                        {
+                            foreach (var annot in GetElementAnnotations("bounding box", element))
+                            {
+                                foreach (var val in GetElementAnnotationValues(annot))
+                                {
+                                    RectangleF rect = GetRectangleFromValue(val, size);
+                                    rect.X += rect.Width / 2;
+                                    rect.Y += rect.Height / 2;
+                                    f.WriteLine($"{val.label_id} {rect.X.ToString().Replace(",", ".")} {rect.Y.ToString().Replace(",", ".")} {rect.Width.ToString().Replace(",", ".")} {rect.Height.ToString().Replace(",", ".")}");
+                                }
+                            }
+                            f.Close();
+                            OnSavedElement?.Invoke(new() { Current = current, Count = count });
+                        }
                     }
+                    traintext.Close();
+                    validtext.Close();
                 }
-                traintext.Close();
-                validtext.Close();
                 CopyDarknet();
             }
             
@@ -139,11 +154,8 @@ namespace UCVConverter
             arr.Add("opencv_world430.dll");
             arr.Add("opencv_world3410.dll");
             arr.Add("pthreadVC2.dll");
-            arr.Add("yolov4-tiny.conv.29");
-            arr.Add("test-tiny.cmd");
-            arr.Add("train-tiny_cudnn.cmd");
-            arr.Add("train-tiny_cudnn_last.cmd");
-            foreach (var item in arr)
+            arr.Add(config.convWeightFileName);
+            foreach(var item in arr)
             {
                 File.Copy(
                     filesFolder + Path.DirectorySeparatorChar + item, 
@@ -154,7 +166,7 @@ namespace UCVConverter
         }
         private void CreateYOLOConfig()
         {
-           var yoloConfig = Configuration.LoadFromFile(filesFolder + Path.DirectorySeparatorChar+ "yolov4-tiny.cfg");
+           var yoloConfig = Configuration.LoadFromFile(config.configFilePath);
             var info = GetInfo();
             Section lastSection = new Section("temp");
             // Set net
@@ -195,10 +207,34 @@ namespace UCVConverter
                     }
                 }
             }
-            var configFile = resultFolder.Path + Path.DirectorySeparatorChar + "yolov4-tiny.cfg";
             var file = yoloConfig.StringRepresentation;
             file = file.Replace("\"", "");
-            File.WriteAllText(configFile, file);
+            File.WriteAllText(config.resultConfigFilePath, file);
+        }
+        private void CreateBatFiles()
+        {
+            var testFileName = "test.cmd";
+            var firstFileName = "train_first.cmd";
+            var lastFileName = "train_last.cmd";
+            var lastBackupWeight = config.Type== YOLOType.YOLOV4? "yolov4_last.weights" : "yolov4-tiny_last.weights";
+            var convFileName = config.Type == YOLOType.YOLOV4 ? "yolov4.conv.137" : "yolov4-tiny.conv.29";
+            var conffilename = Path.GetFileName(config.resultConfigFilePath);
+            using (var testfile = File.CreateText(resultFolder.Path + Path.DirectorySeparatorChar + testFileName))
+            using (var trainFirstFile = File.CreateText(resultFolder.Path + Path.DirectorySeparatorChar + firstFileName))
+            using (var trainLastFile = File.CreateText(resultFolder.Path + Path.DirectorySeparatorChar + lastFileName))
+            {
+                testfile.WriteLine($"darknet.exe detector map data\\obj.data {conffilename} backup\\{lastBackupWeight}");
+                testfile.WriteLine("pause");
+                testfile.Close();
+
+                trainFirstFile.WriteLine($"darknet.exe detector train data/obj.data {conffilename} {config.convWeightFileName} -map");
+                trainFirstFile.WriteLine("pause");
+                trainFirstFile.Close();
+
+                trainLastFile.WriteLine($"darknet.exe detector train data/obj.data {conffilename} backup\\{lastBackupWeight} -map");
+                trainLastFile.WriteLine("pause");
+                trainLastFile.Close();
+            }
         }
     }
 }

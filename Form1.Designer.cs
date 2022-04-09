@@ -49,6 +49,7 @@
             this.imageCount = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupExport = new System.Windows.Forms.GroupBox();
+            this.yoloConfigOnly = new System.Windows.Forms.CheckBox();
             this.randomDimension = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -60,7 +61,7 @@
             this.yoloHeight = new System.Windows.Forms.NumericUpDown();
             this.yoloWidth = new System.Windows.Forms.NumericUpDown();
             this.progressBar = new System.Windows.Forms.ProgressBar();
-            this.yoloConfigOnly = new System.Windows.Forms.CheckBox();
+            this.yoloIsTiny = new System.Windows.Forms.CheckBox();
             this.groupFolders.SuspendLayout();
             this.groupInfo.SuspendLayout();
             this.groupExport.SuspendLayout();
@@ -162,7 +163,7 @@
             // convertBtn
             // 
             this.convertBtn.Enabled = false;
-            this.convertBtn.Location = new System.Drawing.Point(435, 82);
+            this.convertBtn.Location = new System.Drawing.Point(435, 165);
             this.convertBtn.Name = "convertBtn";
             this.convertBtn.Size = new System.Drawing.Size(75, 23);
             this.convertBtn.TabIndex = 11;
@@ -266,21 +267,32 @@
             // 
             // groupExport
             // 
+            this.groupExport.Controls.Add(this.yoloIsTiny);
             this.groupExport.Controls.Add(this.yoloConfigOnly);
             this.groupExport.Controls.Add(this.randomDimension);
             this.groupExport.Controls.Add(this.groupBox1);
             this.groupExport.Controls.Add(this.convertBtn);
             this.groupExport.Location = new System.Drawing.Point(12, 186);
             this.groupExport.Name = "groupExport";
-            this.groupExport.Size = new System.Drawing.Size(516, 115);
+            this.groupExport.Size = new System.Drawing.Size(516, 194);
             this.groupExport.TabIndex = 15;
             this.groupExport.TabStop = false;
             this.groupExport.Text = "Export";
             // 
+            // yoloConfigOnly
+            // 
+            this.yoloConfigOnly.AutoSize = true;
+            this.yoloConfigOnly.Location = new System.Drawing.Point(341, 165);
+            this.yoloConfigOnly.Name = "yoloConfigOnly";
+            this.yoloConfigOnly.Size = new System.Drawing.Size(88, 19);
+            this.yoloConfigOnly.TabIndex = 14;
+            this.yoloConfigOnly.Text = "Config only";
+            this.yoloConfigOnly.UseVisualStyleBackColor = true;
+            // 
             // randomDimension
             // 
             this.randomDimension.AutoSize = true;
-            this.randomDimension.Location = new System.Drawing.Point(361, 33);
+            this.randomDimension.Location = new System.Drawing.Point(337, 33);
             this.randomDimension.Name = "randomDimension";
             this.randomDimension.Size = new System.Drawing.Size(149, 19);
             this.randomDimension.TabIndex = 13;
@@ -456,26 +468,26 @@
             // 
             this.progressBar.AccessibleName = "";
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar.Location = new System.Drawing.Point(0, 305);
+            this.progressBar.Location = new System.Drawing.Point(0, 386);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(540, 23);
             this.progressBar.TabIndex = 17;
             // 
-            // yoloConfigOnly
+            // yoloIsTiny
             // 
-            this.yoloConfigOnly.AutoSize = true;
-            this.yoloConfigOnly.Location = new System.Drawing.Point(337, 85);
-            this.yoloConfigOnly.Name = "yoloConfigOnly";
-            this.yoloConfigOnly.Size = new System.Drawing.Size(88, 19);
-            this.yoloConfigOnly.TabIndex = 14;
-            this.yoloConfigOnly.Text = "Config only";
-            this.yoloConfigOnly.UseVisualStyleBackColor = true;
+            this.yoloIsTiny.AutoSize = true;
+            this.yoloIsTiny.Location = new System.Drawing.Point(253, 165);
+            this.yoloIsTiny.Name = "yoloIsTiny";
+            this.yoloIsTiny.Size = new System.Drawing.Size(48, 19);
+            this.yoloIsTiny.TabIndex = 15;
+            this.yoloIsTiny.Text = "Tiny";
+            this.yoloIsTiny.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 328);
+            this.ClientSize = new System.Drawing.Size(540, 409);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.groupExport);
             this.Controls.Add(this.groupInfo);
@@ -533,5 +545,6 @@
         private NumericUpDown yoloSubdivisions;
         private NumericUpDown yoloBatch;
         private CheckBox yoloConfigOnly;
+        private CheckBox yoloIsTiny;
     }
 }

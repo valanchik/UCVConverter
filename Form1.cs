@@ -68,7 +68,7 @@ namespace UCVConverter
                 ucv.SetResultFolder(folderDialog.SelectedPath);
                 
                 YOLOConfig cnf = new YOLOConfig();
-                cnf.Type = YOLOType.YOLOV4;
+                cnf.Type = yoloIsTiny.Checked?YOLOType.YOLOV4_TINY:YOLOType.YOLOV4;
                 cnf.Dimension = new Size((int)yoloWidth.Value, (int)yoloHeight.Value);
                 cnf.Randomize = randomDimension.Checked;
                 cnf.Batch = (int)yoloBatch.Value;
