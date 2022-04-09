@@ -66,13 +66,16 @@ namespace UCVConverter
                 btn.Enabled = false;
                 openFolder.Enabled = false;
                 ucv.SetResultFolder(folderDialog.SelectedPath);
-                ucv.Configure(
-                        new Size((int)yoloWidth.Value, (int)yoloHeight.Value),
-                        randomDimension.Checked,
-                        (int)yoloBatch.Value,
-                        (int)yoloSubdivisions.Value,
-                        yoloConfigOnly.Checked
-                    );
+                
+                YOLOConfig cnf = new YOLOConfig();
+                cnf.Type = YOLOType.YOLOV4;
+                cnf.Dimension = new Size((int)yoloWidth.Value, (int)yoloHeight.Value);
+                cnf.Randomize = randomDimension.Checked;
+                cnf.Batch = (int)yoloBatch.Value;
+                cnf.Subdivisions = (int)yoloSubdivisions.Value;
+                cnf.ExportConfigOnly = yoloConfigOnly.Checked;
+                ucv.Configure(cnf);
+
                 var cb = () =>
                  {
                      btn.Invoke(new Action(() =>

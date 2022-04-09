@@ -9,34 +9,37 @@ using SharpConfig;
 
 namespace UCVConverter
 {
+    public enum YOLOType
+    {
+        YOLOV4,
+        YOLOV4_TINY
+    }
+    public class YOLOConfig
+    {
+        public YOLOType Type;
+        public Size Dimension { get; set; }
+        public bool Randomize { get; set; }
+        public int Batch { get; set; }
+        public int Subdivisions { get; set; }
+        public bool ExportConfigOnly { get; set; }
 
+    }
     internal class YOLOUCV : UCV
     {
-        private class Config
-        {
-            public Size Dimension { get; set; }
-            public bool Randomize { get; set; }
-            public int Batch { get; set; }
-            public int Subdivisions { get; set; }
-            public bool ExportConfigOnly { get; set; }
-
-        }
+        
         
         private string filesFolder;
         public static event Action<ProgressInfo> OnSavedElement;
-        private Config config = new();
+        private YOLOConfig config = new();
+        
         public YOLOUCV(string dir) : base(dir)
         {
             filesFolder = Directory.GetCurrentDirectory()+"/files";
         }
-        public void Configure(Size dimension, bool randomize, int batch, int subdivisions, bool exportConfigOnly)
-        {
-            config.Dimension = dimension;
-            config.Randomize = randomize;
-            config.Batch = batch;
-            config.Subdivisions = subdivisions;
-            config.ExportConfigOnly = exportConfigOnly;
 
+        public void Configure(YOLOConfig config)
+        {
+            this.config = config;
         }
         public override void Export()
         {
@@ -140,7 +143,7 @@ namespace UCVConverter
             arr.Add("test-tiny.cmd");
             arr.Add("train-tiny_cudnn.cmd");
             arr.Add("train-tiny_cudnn_last.cmd");
-            foreach(var item in arr)
+            foreach (var item in arr)
             {
                 File.Copy(
                     filesFolder + Path.DirectorySeparatorChar + item, 
